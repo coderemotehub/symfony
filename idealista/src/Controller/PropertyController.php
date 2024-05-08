@@ -21,7 +21,7 @@ class PropertyController extends AbstractController
     #[Route('api/properties', name: 'api_properties')]
     public function getProperties(Request $request): Response
     {
-
+        $va_temp = 3;
         return $this->json(true);
     }
 
