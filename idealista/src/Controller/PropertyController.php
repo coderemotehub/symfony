@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
-
+use App\Entity\Property;
 
 
 class PropertyController extends AbstractController
@@ -29,6 +29,7 @@ class PropertyController extends AbstractController
     #[Route('api/property', name: 'create_property', methods: ['POST'])]
     public function createProperty(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $property = new Property();
         return $this->json(true);
     }
 
