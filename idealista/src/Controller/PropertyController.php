@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Property;
+use App\Repository\PropertyRepository;
 
 
 class PropertyController extends AbstractController
@@ -21,9 +22,17 @@ class PropertyController extends AbstractController
     }
 
     #[Route('api/properties', name: 'api_properties')]
-    public function getProperties(Request $request): Response
+    public function getProperties(Request $request, PropertyRepository $repository): Response
     {
-        return $this->json(true);
+        $properties = $repository->findAll();
+        return $this->json($properties);
+    }
+
+    #[Route('api/property/{id}', name: 'api_property')]
+    public function getProperty(PropertyRepository $repository, int $id): Response
+    {
+        $property = $repository->find($id);
+        return $this->json($property);
     }
 
     #[Route('api/property', name: 'create_property', methods: ['POST'])]
@@ -46,6 +55,5 @@ class PropertyController extends AbstractController
 
         return $this->json($property, Response::HTTP_CREATED);
     }
-
 
 }
