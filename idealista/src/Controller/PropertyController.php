@@ -30,7 +30,21 @@ class PropertyController extends AbstractController
     public function createProperty(Request $request, EntityManagerInterface $entityManager): Response
     {
         $property = new Property();
-        return $this->json(true);
+
+        $data = json_decode($request->getContent(), true);
+        
+        $property->setType($data['type']);
+        $property->setSqtm($data['sqtm']);
+        $property->setRoomn($data['roomn']);
+        $property->setBathn($data['bathn']);
+        $property->setDir($data['dir']);
+        $property->setLatlon($data['latlon']);
+        $property->setPrice($data['price']);
+
+        $entityManager->persist($property);
+        $entityManager->flush();
+
+        return $this->json($property, Response::HTTP_CREATED);
     }
 
 
