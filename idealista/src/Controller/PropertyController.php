@@ -15,10 +15,13 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class PropertyController extends AbstractController
 {
     #[Route('/property', name: 'app_property')]
-    public function index(): Response
-    {
+    public function index(PropertyRepository $repository): Response
+    {   
+        $properties = $repository->findAll();
         return $this->render('property/index.html.twig', [
             'controller_name' => 'PropertyController',
+            'title' => 'Properties',
+            'properties' => $properties
         ]);
     }
 
